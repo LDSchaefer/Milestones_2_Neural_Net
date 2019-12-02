@@ -7,9 +7,6 @@
 #include <iostream>
 #include "Neuron.h"
 
-typedef std::vector<Neuron> Layer; // Erstellt einen Vektor Namens Layer in dem  die Vektoren der Neuron Klasse ablegt werden
-                                   // Muss evtl. ebenfalls in .h ausgelagert werden
-
 class NeuralNet:Neuron{ // Neuron muss evtl. nicht vererbt werden
 public:
     // 2a
