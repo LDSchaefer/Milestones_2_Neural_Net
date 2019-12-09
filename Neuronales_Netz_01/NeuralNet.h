@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Neuron.h"
 
-class NeuralNet:Neuron{ // Neuron muss evtl. nicht vererbt werden
+class NeuralNet{
 public:
     // 2a
     NeuralNet(const std::vector<unsigned> &topology);

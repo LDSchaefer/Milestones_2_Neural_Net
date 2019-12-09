@@ -3,43 +3,29 @@
 #include <math.h>
 #include "Neuron.h"
 
-int Neuron::neuron_res()
-{
-  std::cout << "helloworld"<<std::endl; // Hier stände jetzt das Resultat einer Neurone
-
-  }
+Neuron::Neuron(){
+    for(unsigned int i=0;i<3;i++)
+    {
+        val.push_back(i);
+    }
+    softMax(val, 0);
+}
 
 float Neuron::sum_ex(){
-
+    float sum = 0;
     return sum;
 }
 
-void Neuron::softMax(){
-     //Sigma function sigmoid(x) = (std::exp(-x)/sum(std::exp(-x))
-  //sum = std::accumulate(begin(x), end(x), 0.0);
-
-    //Exponential function
-        //double exp_sum = std::exp(sum);
-        //layer = {1, 0.9, 0.4};
-    for(int i = 0; i < Layer()[i].size(); i++)
+float Neuron::softMax(std::vector<unsigned> input_val, int pos){
+    float sum = 0;
+    for(unsigned int i = 0; i < input_val.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
     {
-        float ex = std::exp(Layer[i]);
-        //float sum_exp = layer[i] / std::accumulate(begin(i), end(i), 0.0);
-        std::cout << "" << ex << "\n" ;
+        float ex = std::exp(input_val.at(i));
+        sum = sum + ex; // alle Werte werden in sum addiert
     }
+    float sigma = std::exp(input_val.at(pos))/sum; // Der Wert an der gegebenen Position (i auf Blatt) wird durch sum geteilt
+    std::cout << "" << sigma << "\n";
+    return sigma; // der erhaltene Wert wird zurückgegeben
 }
-        //sigma = std::exp(x) / accumulate(std::exp(x))
 
-        //std::cout << "The sum of vector is: " << sum << "\n";
-        //std::cout << "The Calculation of exp sum is: " << exp_sum << "\n";
-
-        //float sigma = (1.0 / 1.0 + std::exp(-x));
-        //std::cout << sigma << "\n";
-
-        //The tan function calculates
-        //float tan = tanh(x);
-        //std::cout << tan << "\n";
-
-        //Calculate the Vectors
-        //std::vector <double>;
 
