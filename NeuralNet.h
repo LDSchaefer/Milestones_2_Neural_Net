@@ -22,7 +22,7 @@ public:
     // 2f
     void math_dist();
 private:
-    std::vector<Layer> net_struct; // Die Strucktur unseres Netzes,
+    std::vector<Layer> net_struct; // Die Struktur unseres Netzes,
                                    //Zugriff auf einzelne Neuronen/Vektoren: net_struct[layer_num][neuron_num]
 
 };

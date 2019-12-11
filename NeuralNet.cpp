@@ -9,27 +9,37 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
         net_struct.push_back(Layer()); // Erstellt einen Layer(Vektor) in dem Objekt net_struct, welches ein Vektor von einem Vektor ist
         for(unsigned j = 0; j <= topology[i]; j++){ // Zugriff auf den eingegeben Wert um größe der Topologie abzufragen;
                                                     //<= um bias Neuron zu erstellen
+            ///Wenn der Output Layer Anzahl des höchsten Output Layer ist
+            ///unsigned out_Num = num_layer == topology.size() - 1 ?  0 : topology[num_layer + 1];
+            ///out_Num
             net_struct.back().push_back(Neuron());  // Mit .back greifen wir auf das zuletzt erstellte Element von net_struct zu
                                                     // .push_back speichert dann in dieser Position genau eine Instanz von Neuron ab
             std::cout << "Neuron erstellt"<<std::endl;
         }
     }
+
     int inp;
-    std::cout << "Wollen sie alle Outputs des Neuralen Netzwerks ausgeben? ja=1, nein =0" <<std::endl;
+    std::cout << "Wollen sie alle Outputs des Neuralen Netzwerks ausgeben? ja = 1, nein = 0" << std::endl;
     std::cin >> inp;
     std::vector<double> results;
-    if(inp==1){
+
+    if(inp == 1){
         output_all(results);
     }
+    else {
+        exit(0); ///Falls der Benutzer nichts ausgeben möchte
+    }
+
     unsigned inp_val;
     char spec;
     std::vector<unsigned> val_list;
-    std::cout << "Wollen sie spezielle Werte eingeben? 1 = ja"<<std::endl;
+    std::cout << "Wollen sie spezielle Werte eingeben? 1 = ja" <<std::endl;
     std::cin >> spec;
     std::cout << "Geben sie einen Wert ein";
     std::cin >> inp_val;
     val_list.push_back(inp_val);
-    while(spec==1){
+
+    while(spec == 1){
         std::cout << "Wollen sie noch eine Wert eingeben? 1 = ja"<<std::endl;
         std::cin >> spec;
         std::cout << "Geben sie einen Wert ein";
@@ -39,6 +49,7 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
 }
 
 void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen
+
     for(unsigned int i = 0;i < net_struct.back().size()-1;i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
         res_vals.push_back(net_struct.back()[i].softMax(net_struct.back()[i].val, i)); // wir pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neuronen
     }
