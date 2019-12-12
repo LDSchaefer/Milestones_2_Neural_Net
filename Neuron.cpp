@@ -34,6 +34,7 @@ float Neuron::softMax(std::vector<unsigned> input_val, int pos){
     for(unsigned int i = 0; i < input_val.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
     {
 
+        std::cout << "Folgende Inputs x[" << i << "]: ";
         float ex = std::exp(input_val.at(i)) * weight;
         sum = sum + ex; // alle Werte werden in sum addiert
         ///Zusätzlich werden zufällige Zahlen multipliziert, die die Weights sind
@@ -64,7 +65,7 @@ float Neuron::sumHid(const Layer &nextLayer){
     }
 }
 
-float Neuron::outputGradient(const Layer &nextLayer){
+float Neuron::outputGradient(std::vector<unsigned> input_val){
     ///hidden_1 = 10 * (layer_1) + 0 * (layer_2) + 2 * (layer_3)
     /// Hier soll die Output-Gradient für output-Layer für andere Hidden-Gradient für alle Hidden-Layer
     /// berechnet werden:
@@ -73,4 +74,13 @@ float Neuron::outputGradient(const Layer &nextLayer){
     /// 1 * 0.8 + 1 * 0.2 = 1
     ///1 * 0.4 + 1 * 0.9 = 1.3
     ///1 * 0.3 + 1 * 0.5 = 0.8
+    ///
+
+    for(int i = 0; i < input_val.size(); i++){
+        for(int j = 0; j < input_val.size(); j++){
+            input_val[i] = i * weight;
+            std::cout << "Weights w: " << weight << std::endl;
+            std::cout << "Hidden-Layer: " << input_val[i] << std::endl;
+        }
+    }
 }

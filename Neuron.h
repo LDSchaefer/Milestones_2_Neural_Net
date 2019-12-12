@@ -39,7 +39,7 @@ public:
     /// Funktion, mit der zum einen die Output-Gradienten
     /// für Output-LayerNeuronen, zum anderen die Hidden-Gradienten
     /// für alle Hidden-Layer berechnet werden können
-    float outputGradient(const Layer &nextLayer);
+    float outputGradient(std::vector<unsigned> input_val);
     float sumHid(const Layer &nextLayer);
 
 

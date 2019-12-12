@@ -12,6 +12,7 @@ int main()
     topology.push_back(1); //input für Topologie größe
     topology.push_back(2); //input für Topologie größe
     topology.push_back(3); //input für Topologie größe
+    //topology.push_back(4); //input für Topologie größe
     NeuralNet net(topology);
 
     return 0;

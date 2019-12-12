@@ -14,7 +14,7 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
             ///out_Num
             net_struct.back().push_back(Neuron());  // Mit .back greifen wir auf das zuletzt erstellte Element von net_struct zu
                                                     // .push_back speichert dann in dieser Position genau eine Instanz von Neuron ab
-            std::cout << "Neuron erstellt"<<std::endl;
+            std::cout << " Neuron erstellt "<<std::endl;
         }
     }
 
@@ -26,31 +26,33 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
     if(inp == 1){
         output_all(results);
     }
-    else {
+    else if(inp == 0) {
         exit(0); ///Falls der Benutzer nichts ausgeben möchte
     }
 
-    unsigned inp_val;
-    char spec;
+    float inp_val;
+    int spec;
+
     std::vector<unsigned> val_list;
-    std::cout << "Wollen sie spezielle Werte eingeben? 1 = ja" <<std::endl;
+    std::cout << "Wollen sie spezielle Werte eingeben? 1 = ja" << std::endl;
     std::cin >> spec;
+
     std::cout << "Geben sie einen Wert ein";
     std::cin >> inp_val;
-    val_list.push_back(inp_val);
-
     while(spec == 1){
-        std::cout << "Wollen sie noch eine Wert eingeben? 1 = ja"<<std::endl;
-        std::cin >> spec;
-        std::cout << "Geben sie einen Wert ein";
-        std::cin >> inp_val;
-        val_list.push_back(inp_val);
+
+        if(isdigit(inp_val)){
+           val_list.push_back(inp_val);
+           std::cout << &val_list << std::endl;
+        }
+
+
     }
 }
 
 void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen
 
-    for(unsigned int i = 0;i < net_struct.back().size()-1;i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
+    for(unsigned int i = 0; i < net_struct.back().size() - 1; i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
         res_vals.push_back(net_struct.back()[i].softMax(net_struct.back()[i].val, i)); // wir pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neuronen
     }
 }
