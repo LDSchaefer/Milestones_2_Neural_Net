@@ -16,7 +16,7 @@ Neuron::Neuron() ///unsigned out_num
     //testHidden();
     std::cout << "\n";
 
-    softMax(val, 0); //Aktivierungsfunktion
+    softMax(val); //Aktivierungsfunktion
     //outputGradient(val);
 }
 
@@ -28,7 +28,7 @@ float Neuron::sum_ex(){
     return sum; // die Summe wird zurückgegeben
 }
 
-float Neuron::softMax(std::vector<unsigned> input_val, int pos){
+float Neuron::softMax(std::vector<unsigned> input_val){
     //Aufgabe b):
     ///Hier wird Softmax berechnet die s(x) = e^x / sum(e^x)
     ///Aktivierungsfnktion für den Output

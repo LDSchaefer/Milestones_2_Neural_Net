@@ -25,7 +25,7 @@ public:
     //sum of the vector
 
     double sum;
-    float softMax(std::vector<unsigned> input_val, int pos);
+    float softMax(std::vector<unsigned> input_val);
     float derivation(std::vector<unsigned> output_val);
 
     float sum_ex(); //Gib die Summe der Aktivierungsberechnung zurück

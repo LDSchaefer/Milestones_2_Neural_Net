@@ -9,6 +9,7 @@
 
 class NeuralNet{
 public:
+    std::vector<unsigned int> readin_val;
     // 2a
     NeuralNet(const std::vector<unsigned> &topology);
     // 2b
