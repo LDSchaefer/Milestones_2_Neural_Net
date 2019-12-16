@@ -81,6 +81,7 @@ void NeuralNet::read_in(){
                 readin_val.push_back(num);
         }
         file.close();
+        
         numb++;
     }
 

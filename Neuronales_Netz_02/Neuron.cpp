@@ -16,7 +16,7 @@ Neuron::Neuron() ///unsigned out_num
     //testHidden();
     std::cout << "\n";
 
-    softMax(val); //Aktivierungsfunktion
+    //Aktivierungsfunktion
     //outputGradient(val);
 }
 
