@@ -14,8 +14,9 @@ class Neuron{ // Dummy Klasse
 public:
 
     std::vector<unsigned int> val ; //Hier werden die Werte gespeichert und  zurückgegeben
-    std::vector<float> outVal;
-    std::vector<float> deltaWeight;
+    std::vector<float> outVal; //Dieser Vector speichert die Hidden-Layer
+    std::vector<float> hidden;
+    std::vector<float> deltaWeight; //Diese Varaiable speichert die weights
 
     Neuron(); ///Anzahl der Outputs
     ///unsigned out_Num
@@ -35,7 +36,7 @@ public:
     /// für Output-LayerNeuronen, zum anderen die Hidden-Gradienten
     /// für alle Hidden-Layer berechnet werden können
     float outputGradient(std::vector<unsigned> input_val);
-    float sumHid(std::vector<unsigned> input_val); //Gibt jeweils die Hidden-Layer aus
+    float sumHid(float sum_layer); //Gibt jeweils die Hidden-Layer aus
 
     //float testHidden();
 };

@@ -17,8 +17,6 @@ Neuron::Neuron() ///unsigned out_num
     std::cout << "\n";
 
     softMax(val, 0); //Aktivierungsfunktion
-
-    //sumHid(val);    //Hidden-Layer Gradient
     //outputGradient(val);
 }
 
@@ -34,13 +32,17 @@ float Neuron::softMax(std::vector<unsigned> input_val, int pos){
     //Aufgabe b):
     ///Hier wird Softmax berechnet die s(x) = e^x / sum(e^x)
     ///Aktivierungsfnktion für den Output
+
+
+
     float sum = 0; //Für die erst Summe der Hidden-Layers
     float sum_out = 0; //Für den Output der summierten Hidden-Layer
     float sigmoid = 0; //Für den endgültigen Output
+
     std::cout << "Zufaellige weights w: " << weight << std::endl;
     deltaWeight.push_back(weight); //Die Gewichte werden in dieser Variable gespeichert und zurückgegeben.
 
-    float hid = 0; //Diese Variable speichert die Zwischenberechnung der Inputs
+    //float hid = 0; //Diese Variable speichert die Zwischenberechnung der Inputs
     for(unsigned int i = 0; i < input_val.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
     {
         //Hier werden die Inputs mit dem Gewicht (Kanten) multipliziert
@@ -58,20 +60,23 @@ float Neuron::softMax(std::vector<unsigned> input_val, int pos){
     }
     std::cout << "\n";
     //Ausgabe der Hidden-Layers
-    std::cout << "Output von der Summe der Hidden-Layer Gradient L: " << sum << std::endl;
-    std::cout << "\n";
+    //std::cout << "Output von der Summe der Hidden-Layer Gradient L: " << sum << std::endl;
+    //std::cout << "\n";
     // Der Wert an der gegebenen Position (i auf Blatt) wird durch sum geteilt
+
     float sigma = (1 / (1 + std::exp(-sum))); //Aktivierungsfunktion
 
-    std::cout << "Hidden-Layer Output Softmax1(" << sum << ") = " << sigma << "\n";
-    std::cout << "\n";
+    //std::cout << "Hidden-Layer Output Softmax1(" << sum << ") = " << sigma << "\n";
+    //std::cout << "\n";
     sum_out += sigma * weight;
     sigmoid = (1 / (1 + std::exp(-sum_out))); //Aktivierungsfunktion Softmax
     std::cout << "Output der Softmax2(" << sum_out << "): " << sigmoid << std::endl;
-    std::cout << "--------------------------------------------------------------------------------------------------------------"<<"\n";
-    outVal.push_back(sigma); //Hier werden die Werte gespeichert
+
+
+    hidden.push_back(sigma); //Hier werden die Werte gespeichert
     outVal.push_back(sigmoid);
-    return sigma; // der erhaltene Wert wird zurückgegeben
+
+    return sumHid(sigma); // der erhaltene Wert wird zurückgegeben
 }
 
 ///Diese Funktion sorgt dafür, dass eine Verbindung zwischen Neuronen von Layer i und Layer i + 1,
@@ -88,7 +93,8 @@ float Neuron::derivation(std::vector<unsigned> output_val){
     //return exp_deriv;
 }
 
-float Neuron::sumHid(std::vector<unsigned> input_val){
+float Neuron::sumHid(float sum_layer)
+{
     //Aufgabe c):
     ///Die Hidden Funktion berechnet die jeweiligen Inputs mit ihren Gewichtungen
     /// berechnet werden:
@@ -97,22 +103,23 @@ float Neuron::sumHid(std::vector<unsigned> input_val){
     /// 1 * 0.8 + 1 * 0.2 = 1
     ///1 * 0.4 + 1 * 0.9 = 1.3
     ///1 * 0.3 + 1 * 0.5 = 0.8
-    float hid = 0; //Diese Variable speichert die Zwischenberechnung der Inputs
-    double sum_hid = 0; //Die Summe der Hidden-Layer wird berechnet
 
-    for(int i = 0; i < input_val.size(); i++){
-        sum_hid += weight * input_val.at(i); //hidden-Layer = wi * xi
-        ///std::cout << "Die Gewichtung weight[" << i << "]:" << weight << std::endl;
-        std::cout << "Die Summe der Hidden-Layer[" << i << "]: " << sum_hid << std::endl;
-    }
-    std::cout << "\n";
-    return hid;
+    float hid_count = 0; //Diese Variable speichert die Zwischenberechnung der Inputs
+    double sum_hid = 0;  //Die Summe der Hidden-Layer wird berechnet
+    //hid_count++;
+    sum_hid += sum_layer * weight; //Die Layer werden zusammen mit den weights multipliziert und addiert.
+
+    std::cout << "Die Summe der Hidden-Layers L: " << sum_hid << std::endl; //Ausgabe der Summe Layer
+    std::cout << "--------------------------------------------------------------------------------------------------------------"<<"\n";
+
 }
+
 
 float Neuron::outputGradient(std::vector<unsigned> input_val){
     ///hidden_1 = 10 * (layer_1) + 0 * (layer_2) + 2 * (layer_3)
     /// Hier soll die Output-Gradient für output-Layer für andere Hidden-Gradient für alle Hidden-Layer
     float sig_outn; //Für den Output Layer Gradient Berechnung:
+    float out_m = 0; //m ist der Index von Neuron
     for(int i = 0; i < input_val.size(); i++){
         //om = (tm - f(xm)) * f'(xm):
 

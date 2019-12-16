@@ -1,0 +1,96 @@
+Milenstone 2 Aufgabe 4
+
+
+Angefangen am 07.12.2019 um 15:12 Uhr
+
+Bei der Aufgabe 4 muss man eine graphische Darstellung einer Kurve ausgeben, welches die Achsenbeschriftung 
+einstellbar sein sollen, z.B. ein Koordinatensystem mit der x- und y-Achse.
+Durch hilfe des Tutors, ist ein Widget erstellt mit einem Koordinatensystem.
+
+Readme:
+Was funktioniert nicht?
+
+Ich habe versucht erst mal eine Parabel auszugeben, so dass ich weiß, ob es ausgegeben wird.
+Man kann nur ein leeres Koordinatensystem ausgeben.
+Ein Vector mit einer x und y variable wurde erstellt mit bestimmten Zahlen, welches dann auf das Koordinatensystem übertragen werden soll.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+25.11.2019 - 03.12.2019
+Aufgabe 1: Neuron
+
+Bei der Aufgabe 1 habe ich eine Neuron Klasse erstellt, welches private Varaiblen definiert sind, die für die (public)
+Methoden verwendet werden sollen.
+Die Softmax berechnet die Zahl der Input und diese werden durch die Eulersche Funktion berechnet:
+Für die Summe der exponentierten Inputs wurden in eine extra Funktion definiert welches die Summe der einzelnen Vectoren zurückgibt.
+Die Variable "sigma" berechnet die einzelnen Werte des Vektors (Inputs) durch die Summe des Vektors zusammen, so dass es als Output ausgegeben wird.
+
+10.12.2019
+
+Dabei wurde die Softmax Funktion etwas erweitert in dem eine "weight" Variable definiert, welches mit dem sigma der einzelnen Werten multipliziert wird.
+Die "weight" Variable ist eine zufällige Zahl im Bereich von 0 bis 1:
+///Zusätzlich werden zufällige Zahlen multipliziert, die die Weights sind
+        ///w[l] = rand(0:1)
+        /// p1 * w1 -->
+        /// p2 * w2 -->
+        /// p3 * w3 -->
+        /// ...
+        /// pn * wn -->
+        /// Siehe Plenartfolie_03 Seite 5
+
+Der oben erwähnte Vector ist ein Layer, das die Werte in die Klasse Neuron abgelegt wird.
+
+11.12 - 16.12.2019
+
+In diesem Zeitraum wurde die Aufgabe 1 weiter bearbeitet, indem die Softmax Funktion verbessert wurde. Bei dieser Funktion muss sich an die Formel
+"sigma(x) = e^x / sum(e^x) orientieren. Dabei habe ich die einzelnen Inputs erst mit ihren einzelnen Gewichten multipliziert, 
+welche rein zufällig gewählt werden. Danach habe ich die berechneten Inputs zusammen summiert, also sum += x1*w1 * x2*w2 + ... + xn*wn.
+Daraufhin habe ich die Summe (sum) mit der e-Funktion berechnet, sodass man diese folgende Formel für die Aktivierungsfunktion benutzen kann:
+s(x) = (1 / (1 + e^-x))
+
+Davor habe ich diese Berechnung alles aufgeschrieben und schriftlich berechnet:
+
+Inputs:    Gewichte (weights):		Hidden-Layer(Zwischenberechnung):
+x1 = 1		w1 = 0.5			hid1 = x1 * w1 = 1 * 0.5 = 0.5
+x2 = 2		w2 = 0.4			hid2 = x2 * w2 = 2 * 0.4 = 0.8
+x3 = 3		w3 = 0.2			hid3 = x3 * w3 = 3 * 0.2 = 0.6
+
+Anwendung von s(x) = 1 / 1 + e^-x:
+hid1_wahr = 1 / ( 1 + e^-0.5) = 1.648721271
+hid2_wahr = 1 / (1 + e^-0.8) = 2.225540928
+hid3_wahr = 1 / (1 + e^-0.6) = 1.8221188
+
+Weitere Gewichte:
+w_1 = 0.3
+w_2 = 0.2
+w_3 = 0.5
+
+Summe der Hidden-Layer mit den Gewichten:
+sum_out = 1.648721271 * 0.3 + 2.225540928 * 0.2 + 1.8221188 * 0.5 = 1.850783967
+
+Sofmax-Aktivierung: s(x) = 1 / 1 + e^-x
+
+s(1.850783967) = (1 / (1 + e^-1.850783967)) = 0.8642191234 //Endgültiger Output
+
+
+Bei der Benutzung dieser Funktion muss man nicht eingeben, da die Werte schon mit drei Vektoren festgelegt ist, z.B. x1 = 1, x2 = 2, x3 = 3.
+Die Gewichte bzw. die weights wurde durch die Random Funktion implementiert, welches rein zufällige Zahlen generiert.
+Daraufhin werden die Ergebnisse alle ausgegeben, also die Multiplikation von den ganzen Inputs xi mit Weights wi, die Summe der Inputs,
+die Aktivierung der Hidden-Layers, die Multiplikation von den ganzen Hidden-Layers hid_i mit Weights wi, Die Summe der Hidden-Layer und
+die Softmax-Funktion, welches für die Aktivierung der Hidden-Layer berechnet.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Aufgabe 2: Neuronales Netzerk
+
+Das Neuronale Netzwerk wird in eine Klasse definiert und soll auf die Topologie basieren.
+Diese Funktion bestimmt die Anzahl der Neuronen je Layer.
+Der Zugriff auf den eingegeben Wert, um größe der Topologie abzufragen;
+<= um bias Neuron zu erstellen
+// Die Struktur unseres Netzes,
+Die Varaible "net_struct" ist der Zugriff auf einzelne Neuronen/Vektoren: net_struct[layer_num][neuron_num]
+Das Neunale Netzwerk berechnet die Outputs für bestimmte Eingaben:
+
+Die Funktion "NeuralNet::output_all(std::vector<double> &res_vals)" nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen.
+Wir gehen für jede Neurone des letzten Layers durch (Outputlayer) und pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neurone.
