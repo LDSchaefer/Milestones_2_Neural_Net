@@ -27,11 +27,30 @@ float Neuron::sum_ex(){
     return sum; // die Summe wird zurückgegeben
 }
 
+float Neuron::learningRate(){
+    //Die Funktion berechnet die learning rates, welches die Kontroll der Geschwindigkeit
+    //auf Konvergenzen zeigt.
+    //Differnenzialgleichung:
+    //w_t+1 = w_t + eta / wurzel(v + epsilon)
+    float beta1 = 0.9;
+    float beta2 = 0.999;
+    float m;
+    m = beta1 + (1 - beta1);
+    eta = 0.0;          //Counter für die learning rates
+    float e = pow(10, -8);
+    learning = 0;
+    for(int i = 0; i < deltaWeight.size(); i++){
+        eta += 1;
+        learning = - eta * (e / deltaWeight[i]) + m;
+        weight_t.push_back(learning);
+    }
+    return eta;
+}
 float Neuron::weightUpdate(){
     //Diese Funktion updatet die Gewichte
-    float beta;
+
     float t = 0;
-    //w_t+1 = w_t + eta / wurzel(v + epsilon)
+
     srand(0);
     weight *= 2;
     deltaWeight.push_back(weight); //Die weights werden in diesem Vector zurückgegeben
@@ -52,6 +71,8 @@ float Neuron::softMax(std::vector<unsigned int> input){
 
     for(unsigned int i = 0; i < input.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
     {
+
+        eta += 1; //Eta wird um 0.1
         //std::cout << "Der Vektor hat folgende Elemente: " << input[i] << std::endl;
         //Hier werden die Inputs mit dem Gewicht (Kanten) multipliziert
 

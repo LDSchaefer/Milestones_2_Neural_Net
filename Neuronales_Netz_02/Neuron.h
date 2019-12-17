@@ -17,6 +17,9 @@ public:
     //Attributen des Neurons:
 
     double weight = rand() / double(RAND_MAX); //Zufällige Zahlen von 0 bis 1 werden gewählt
+    float eta;
+    std::vector<float> weight_t;
+    float learning;
 
     std::vector<unsigned int> val ;         //Hier werden die Werte gespeichert und  zurückgegeben.
     std::vector<float> outVal;              //Dieser Vector speichert die Hidden-Layer.
@@ -36,6 +39,7 @@ public:
     float softMax(std::vector<unsigned int> input);      //Aufgabe b)
     float derivation();  //Aufgabe b) Ableitung der Softmax()
     float sum_ex();                         //Gib die Summe der Aktivierungsberechnung zurück
+    float learningRate();
 
     //Aufgabe 1 d) und e)
     /// Funktion, mit der zum einen die Output-Gradienten
