@@ -28,7 +28,7 @@ public:
 
     Neuron(); ///Anzahl der Outputs
 
-    double sigma;                           //transfer function from the inputs
+    float sigma;                           //transfer function from the inputs
     //sum of the vector
     std::vector<float> vec;                 //Die Inputs * Weights werden unter diesem Vektor gespeichert.
 
@@ -36,11 +36,11 @@ public:
 
     //Methoden des Neurons:
     float weightUpdate();                   //Aufgabe f)
-    float softMax(std::vector<unsigned int> input);      //Aufgabe b)
+    float softMax(std::vector<unsigned> input);      //Aufgabe b)
+    float softMax(std::vector<float> input);
     float derivation();  //Aufgabe b) Ableitung der Softmax()
     float sum_ex();                         //Gib die Summe der Aktivierungsberechnung zurück
     float learningRate();
-
     //Aufgabe 1 d) und e)
     /// Funktion, mit der zum einen die Output-Gradienten
     /// für Output-LayerNeuronen, zum anderen die Hidden-Gradienten

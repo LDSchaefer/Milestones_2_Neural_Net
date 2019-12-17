@@ -15,7 +15,6 @@
 NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
 
 
-
     unsigned long long num_layer = topology.size(); // Anzahl der Eingegebenen Werte für die Topologie (da frei wählbar)
 
 
@@ -71,16 +70,25 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
     }
 
     output_spec();
-
-
-
 }
 
 
 
 void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen
 
+    for(unsigned int i=0;i<net_struct.size();i++){ // für jedes Layer
 
+        for(unsigned int j=0;j<net_struct.at(i).size();j++){ // für jedes Neuron
+            if(i==0){
+                net_struct.at(i).at(j).softMax(input_vec);
+            }
+            else{
+                net_struct.at(i).at(j).softMax(hidden_vec);
+            }
+            hidden_vec.push_back(net_struct.at(i).at(j).sigma);
+        }
+        hidden_vec.clear();
+    }
 
     for(unsigned int i = 0; i < net_struct.back().size() - 1; i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
 
@@ -94,25 +102,9 @@ void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor
 
 void NeuralNet::output_spec(){
 
-    unsigned int input_val;
-
     float vec_val = 0;
 
     std::vector<unsigned int> temp_val;
-
-    for(unsigned int i=0; i < net_struct.front().size();++i){
-
-        std::cout << net_struct.front().size();
-
-        std::cout << "Geben sie den Input val fuer Neuron Nr. " << i+1 <<" ein:";
-
-        std::cin >> input_val;
-
-        std::cout << "" <<std::endl;
-
-        net_struct.front()[i].val.push_back(input_val); // Eingegbener Wert wird in den val vektor eines jeden Neurons gepuscht
-
-    }
 
     for(unsigned int i=0;i<net_struct.size();i++){ // für jedes Layer
 

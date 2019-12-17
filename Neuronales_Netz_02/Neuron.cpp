@@ -32,8 +32,8 @@ float Neuron::learningRate(){
     //auf Konvergenzen zeigt.
     //Differnenzialgleichung:
     //w_t+1 = w_t + eta / wurzel(v + epsilon)
-    float beta1 = 0.9;
-    float beta2 = 0.999;
+    double beta1 = 0.9;
+    double beta2 = 0.999;
     float m;
     m = beta1 + (1 - beta1);
     eta = 0.0;          //Counter für die learning rates
@@ -46,6 +46,7 @@ float Neuron::learningRate(){
     }
     return eta;
 }
+
 float Neuron::weightUpdate(){
     //Diese Funktion updatet die Gewichte
 
@@ -57,7 +58,8 @@ float Neuron::weightUpdate(){
     return weight;
 }
 
-float Neuron::softMax(std::vector<unsigned int> input){
+
+float Neuron::softMax(std::vector<unsigned> input){
     //Aufgabe b):
     ///Hier wird Softmax berechnet die s(x) = e^x / sum(e^x)
     ///Aktivierungsfnktion für den Output
@@ -71,8 +73,46 @@ float Neuron::softMax(std::vector<unsigned int> input){
 
     for(unsigned int i = 0; i < input.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
     {
+        //std::cout << "Der Vektor hat folgende Elemente: " << input[i] << std::endl;
+        //Hier werden die Inputs mit dem Gewicht (Kanten) multipliziert
 
-        eta += 1; //Eta wird um 0.1
+        std::cout << " Inputs x: " << i << std::endl;
+        std::cout << "Zufaellige weights w" << i << ": " << weightUpdate() << std::endl;
+
+        vec.push_back(input[i] * weightUpdate()); //Speichert die Inputs * Weights
+
+        sum += input[i] * weightUpdate();            //Die Summe der Gewichte und Inputs
+
+        ///Zusätzlich werden zufällige Zahlen multipliziert, die die Weights sind
+        ///w[l] = rand(0:1)
+        /// p1 * w1 -->
+        /// p2 * w2 -->
+        /// p3 * w3 -->
+        /// ...
+        /// pn * wn -->
+        /// Siehe Plenartfolie_03 Seite 5
+    }
+    sigma = sum;
+    std::cout << "\n";
+
+    // Der Wert an der gegebenen Position (i auf Blatt) wird durch sum geteilt
+    hidden.push_back(sigma);                            //Hier werden die Werte der Hidden-Layer gespeichert.
+}
+
+float Neuron::softMax(std::vector<float> input){
+    //Aufgabe b):
+    ///Hier wird Softmax berechnet die s(x) = e^x / sum(e^x)
+    ///Aktivierungsfnktion für den Output
+
+    float sum = 0;     //Für die erst Summe der Hidden-Layers
+    float sum_out = 0; //Für den Output der summierten Hidden-Layer
+    float sigmoid = 0; //Für den endgültigen Output
+
+
+    //deltaWeight.push_back(weight); //Die Gewichte werden in dieser Variable gespeichert und zurückgegeben.
+
+    for(unsigned int i = 0; i < input.size(); i++) // für jeden wert des eingegebenen vektors wird der e hoch i berechnet
+    {
         //std::cout << "Der Vektor hat folgende Elemente: " << input[i] << std::endl;
         //Hier werden die Inputs mit dem Gewicht (Kanten) multipliziert
 

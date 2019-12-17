@@ -9,10 +9,18 @@ Erster Versuch ein Neurales Netzwerk aus mehreren Neuronen aus 1 zusammen zusetz
 int main()
 {
     std::vector<unsigned> topology;
-    topology.push_back(0); //input für Topologie größe
-    topology.push_back(1); //input für Topologie größe
-    topology.push_back(2); //input für Topologie größe
-    topology.push_back(3); //input für Topologie größe
+    int inp = 1;
+    int count = 1;
+    int neuron_count;
+    std::cout << "Geben Sie die Topologie an:"<<std::endl;
+    while(inp == 1){
+        std::cout<< "Wie viele Neuronen soll der Layer " << count << " haben?"<<std::endl;
+        std::cin >> neuron_count;
+        topology.push_back(neuron_count - 1);
+        std::cout <<"Soll ein weiterer Layer der Topologie hinzugefuegt werden? ja [1], nein [0]"<<std::endl;
+        std::cin >> inp;
+        count ++;
+    }
     NeuralNet net(topology); //Verbindet die Topologie der Neuronen mit dem neuronalem Netzwerk
 
     return 0;
