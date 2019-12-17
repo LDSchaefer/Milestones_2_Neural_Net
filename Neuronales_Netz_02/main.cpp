@@ -9,10 +9,10 @@ Erster Versuch ein Neurales Netzwerk aus mehreren Neuronen aus 1 zusammen zusetz
 int main()
 {
     std::vector<unsigned> topology;
+    topology.push_back(0); //input für Topologie größe
     topology.push_back(1); //input für Topologie größe
     topology.push_back(2); //input für Topologie größe
     topology.push_back(3); //input für Topologie größe
-    topology.push_back(4); //input für Topologie größe
     NeuralNet net(topology); //Verbindet die Topologie der Neuronen mit dem neuronalem Netzwerk
 
     return 0;
