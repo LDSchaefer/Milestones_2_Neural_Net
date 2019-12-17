@@ -8,6 +8,7 @@
 
 #include <string>
 
+#include <stdlib.h>
 
 
 
@@ -75,7 +76,7 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
 
 
 void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen
-
+    std::vector<float> res;
     for(unsigned int i=0;i<net_struct.size();i++){ // für jedes Layer
 
         for(unsigned int j=0;j<net_struct.at(i).size();j++){ // für jedes Neuron
@@ -85,15 +86,16 @@ void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor
             else{
                 net_struct.at(i).at(j).softMax(hidden_vec);
             }
-            hidden_vec.push_back(net_struct.at(i).at(j).sigma);
+            res.push_back(net_struct.at(i).at(j).sigma);
         }
-        hidden_vec.clear();
+        hidden_vec.swap(res);
+        res.clear();
     }
 
-    for(unsigned int i = 0; i < net_struct.back().size() - 1; i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
+    for(unsigned int i = 0; i < net_struct.back().size(); i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
 
-        res_vals.push_back(net_struct.back()[i].softMax(net_struct.back()[i].val)); // wir pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neuronen
-
+        res_vals.push_back(net_struct.back()[i].sigma); // wir pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neuronen
+        std::cout << net_struct.back()[i].sigma << std::endl;
     }
 
 }
@@ -129,7 +131,7 @@ void NeuralNet::output_spec(){
 
 
 void NeuralNet::read_in(){
-
+    std::vector<unsigned int> readin_val;
     int inp;
 
     std::cout<<"single file [1] or batch[0]";
@@ -149,11 +151,12 @@ void NeuralNet::read_in(){
         file.open(fileid);
 
         while (file >> num){
-
+                num = file.get();
                 readin_val.push_back(num);
 
         }
-
+        input_vec.swap(readin_val);
+        readin_val.clear();
         file.close();
 
         numb++;
