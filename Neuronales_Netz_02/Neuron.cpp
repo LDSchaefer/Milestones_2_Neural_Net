@@ -33,7 +33,6 @@ float Neuron::learningRate(){
     //Differnenzialgleichung:
     //w_t+1 = w_t + eta / wurzel(v + epsilon)
     double beta1 = 0.9;
-    double beta2 = 0.999;
     double m;
     m = beta1 + (1 - beta1) * out_m;
     eta = 0.0;          //Counter für die learning rates
@@ -71,8 +70,6 @@ float Neuron::first_step(std::vector<int> input){
     ///Aktivierungsfnktion für den Output
 
     float sum = 0;     //Für die erst Summe der Hidden-Layers
-    float sum_out = 0; //Für den Output der summierten Hidden-Layer
-    float sigmoid = 0; //Für den endgültigen Output
 
 
     //deltaWeight.push_back(weight); //Die Gewichte werden in dieser Variable gespeichert und zurückgegeben.

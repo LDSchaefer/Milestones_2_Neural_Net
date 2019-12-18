@@ -7,62 +7,30 @@
 
 
 NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
+    read_in();
     std::vector<double> results;
     int inp;
     unsigned long long num_layer = topology.size(); // Anzahl der Eingegebenen Werte für die Topologie (da frei wählbar)
 
     for(unsigned i = 0; i < num_layer ; i++){
-
-
-
         net_struct.push_back(Layer()); // Erstellt einen Layer(Vektor) in dem Objekt net_struct, welches ein Vektor von einem Vektor ist
-
-
-
-
-
-
-
         for(unsigned j = 0; j <= topology[i]; j++){ // Zugriff auf den eingegeben Wert um größe der Topologie abzufragen;
-
-
-
                                                     //<= um bias Neuron zu erstellen
-
-
-
             ///Wenn der Output Layer Anzahl des höchsten Output Layer ist
-
-
-
             ///unsigned out_Num = num_layer == topology.size() - 1 ?  0 : topology[num_layer + 1];
-
-
-
             ///out_Num
-
-
-
             net_struct.back().push_back(Neuron());  // Mit .back greifen wir auf das zuletzt erstellte Element von net_struct zu
-
-
-
                                                     // .push_back speichert dann in dieser Position genau eine Instanz von Neuron ab
-
-
-
             std::cout << " Neuron erstellt "<<std::endl;
-
-
-
         }
-
-
-
     }
-
-    output_spec();
-
+    std::cout << "Wollen Sie Die Ausgabe für eine spezifische Eingabe in das Neurale Netz? Ja [1] Nein [0]";
+    std::cin >> inp;
+    std::cout << "" << std::endl;
+    if(inp == 1){
+        output_spec();
+    }
+    inp = 0;
     std::cout << "Wollen sie alle Outputs des Neuralen Netzwerks ausgeben? ja = 1, nein = 0" << std::endl;
     std::cin >> inp;
 
@@ -75,64 +43,26 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
     }
 }
 
-
-
-
-
-
-
 void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor entgegen in dem die Resultate gespeichert werden sollen
-
     std::vector<float> res;
-
     for(unsigned int i=0;i<net_struct.size();i++){ // für jedes Layer
-
-
-
         for(unsigned int j=0;j<net_struct.at(i).size();j++){ // für jedes Neuron
-
             if(i==0){
-
                 net_struct.at(i).at(j).first_step(input_vec);
-
             }
-
             else{
-
                 net_struct.at(i).at(j).softMax(hidden_vec);
-
             }
-
             res.push_back(net_struct.at(i).at(j).sigma);
-
         }
-
         hidden_vec.swap(res);
-
         res.clear();
-
     }
-
-
-
     for(unsigned int i = 0; i < net_struct.back().size(); i++){ // wir gehen für jede Neurone des letzten Layers durch (Outputlayer)
-
-
-
         res_vals.push_back(net_struct.back()[i].sigma); // wir pushen die Resultate jeweils in einen Vektor mit den Resulataten der Neuronen
-
         std::cout << net_struct.back()[i].sigma << std::endl;
-
     }
-
-
-
 }
-
-
-
-
-
 
 
 void NeuralNet::output_spec(){
@@ -144,110 +74,72 @@ void NeuralNet::output_spec(){
     std::vector<unsigned int> temp_val;
 
     for(unsigned int i=0;i<net_struct.front().size();i++){
-        std::cout << "geben Sie eine Wert für die Input Neurone "<< i+1 << "ein:";
+        std::cout << "geben Sie eine Wert fuer die Input Neurone "<< i+1 << " ein:";
         std::cin >> inp;
         input_vec.push_back(inp);
         std::cout << "" << std::endl;
     }
-
-
     output_all(spec_inp);
-
-
-
 }
 
-
-
-
-
-
-
 void NeuralNet::read_in(){
-
     std::vector<int> readin_val;
-
-    int inp;
-
-
-
-    std::cout<<"single file [1] or batch[0]";
-
-
-
-    int numb=0;
-
-
-
-    unsigned int num;
-
-
-
+    int inp = 0;
+    int numb= 0;
+    int batch_num = 0;
+    int flip;
+    unsigned int num = 0;
+    std::string u_input;
     std::ifstream file;
-
-
-
     std::string fileid;
-
-
-
-    while(numb<2500){
-
-
-
-        fileid = "qgp\\phsd50csr.auau.31.2gev.centr.0000phsd50csr.auau.31.2gev.centr."+ std::to_string(numb) + "_event.dat";
-
-
-
-        file.open(fileid);
-
-
-
-        while (file >> num){
-
-                num = file.get();
-
-                readin_val.push_back(num);
-
-
-
+    std::cout<<"single file [1] oder batch[0] oder kein Import [2]:";
+    std::cin >> inp;
+    if(inp == 0){
+        std::cout<< "Wie viele Dateien sind in dem Batch?" ;
+        std::cin >> batch_num;
+        std::cout <<"" << std::endl;
+        while(numb<batch_num){
+            flip=  rand() % 2 + 1;
+            if(flip == 1){
+                fileid = "qgp\\phsd50csr.auau.31.2gev.centr.0000phsd50csr.auau.31.2gev.centr."+ std::to_string(numb) + "_event.dat";
+            }
+            else{
+                fileid = "nqgp\\phsd50csr.auau.31.2gev.centr.0000phsd50csr.auau.31.2gev.centr."+ std::to_string(numb) + "_event.dat";
+            }
+            file.open(fileid);
+            while (file >> num){
+                    num = file.get();
+                    readin_val.push_back(num);
+            }
+            input_vec.swap(readin_val);
+            readin_val.clear();
+            file.close();
+            numb++;
         }
-
-        input_vec.swap(readin_val);
-
-        readin_val.clear();
-
-        file.close();
-
-
-
-        numb++;
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    else if(inp == 1){
+        std::cout<< "Geben Sie den Pfad an:";
+        std::cin >> fileid;
+        std::cout << "" << std::endl;
+        file.open(fileid);
+        while (file >> num){
+                num = file.get();
+                readin_val.push_back(num);
+        }
+        input_vec.swap(readin_val);
+        readin_val.clear();
+        file.close();
+    }
+    else if(inp == 2){
+            return;
+    }
+    //if(net_struct.front().size()!= num){
+    //    std::cout << "Topologie passt nicht zum Datenset";
+    //    return;
+    //}
 
     // Hier kommt Read In einer Datei hin siehe Milestone 1
-
-
-
     // Funktion soll sowohl Dateien als auch Batches eingelesen können -> überladen der Funktion für jeweils Batches und Dateien
-
-
 
 }
 

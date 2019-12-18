@@ -1,5 +1,7 @@
 /*
-Erster Versuch ein Neurales Netzwerk aus mehreren Neuronen aus 1 zusammen zusetzen
+Neuronales Netzwerk, welches aus mehreren Neuronen Besteht
+
+Berechnung, Ausgabe und import von Dateien sind möglich.
 */
 #include <iostream>
 #include <vector>
