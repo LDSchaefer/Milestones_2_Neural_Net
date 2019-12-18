@@ -16,7 +16,7 @@ Neuron::Neuron() ///unsigned out_num
     //softMax(val); //Aktivierungsfunktion
     sumHid();
     derivation();
-    //outputGradient(val);
+    //outputGradient();
 }
 
 float Neuron::sum_ex(){
@@ -34,23 +34,29 @@ float Neuron::learningRate(){
     //w_t+1 = w_t + eta / wurzel(v + epsilon)
     double beta1 = 0.9;
     double beta2 = 0.999;
-    float m;
-    m = beta1 + (1 - beta1);
+    double m;
+    m = beta1 + (1 - beta1) * out_m;
     eta = 0.0;          //Counter für die learning rates
-    float e = pow(10, -8);
+    double e = pow(10, -8);
     learning = 0;
     for(int i = 0; i < deltaWeight.size(); i++){
         eta += 1;
         learning = - eta * (e / deltaWeight[i]) + m;
         weight_t.push_back(learning);
     }
+    std::cout << "\n";
+
+    for(int i = 0; i < weight_t.size(); i++){
+        std::cout << "Learning rates: " << weight_t[i] << "\n";
+    }
+
     return eta;
 }
 
 float Neuron::weightUpdate(){
     //Diese Funktion updatet die Gewichte
 
-    float t = 0;
+    //float t = 0;
 
     srand(0);
     weight *= 2;
@@ -152,7 +158,7 @@ float Neuron::softMax(std::vector<float> input){
 float Neuron::derivation(){
     //Aufgabe b):
     ///Die Ableitungsfunktion sigmoid'(x) = 1 / 1 + e^-x dinet für das Lernen des Netzwerkes
-    float exp_deriv = 0;
+
     for(int i = 0; i < outVal.size(); i++){
         //exp_deriv = 1 / 1 + std::exp(-outVal[i]); ///Die Softmax für die Backpropagation
         exp_deriv = (outVal[i] * (1 - outVal[i])); //Die wahre Ableitung der Softmax Funktion: f'(x) = S * (1 - S)
@@ -187,13 +193,17 @@ float Neuron::sumHid()
 float Neuron::outputGradient(std::vector<unsigned int> input_val){
     ///hidden_1 = 10 * (layer_1) + 0 * (layer_2) + 2 * (layer_3)
     /// Hier soll die Output-Gradient für output-Layer für andere Hidden-Gradient für alle Hidden-Layer
-    float sig_outn; //Für den Output Layer Gradient Berechnung:
-    float out_m = 0; //m ist der Index von Neuron
+    //float sig_outn; //Für den Output Layer Gradient Berechnung:
 
+    double t = 0;
+
+    out_m = t - sigma * exp_deriv;
     //om = (tm - f(xm)) * f'(xm):
     for(int i = 0; i < outVal.size(); i++){
-        std::cout << "Output Gradient: " << outVal[i] << "\n";
+        std::cout << "Output Sigma(): " << outVal[i] << "\n";
     }
+    std::cout << "Output Gradient: " << out_m << "\n";
+    return out_m;
 
 }
 

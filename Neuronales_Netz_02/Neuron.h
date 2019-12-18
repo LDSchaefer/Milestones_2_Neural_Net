@@ -17,9 +17,11 @@ public:
     //Attributen des Neurons:
 
     double weight = rand() / double(RAND_MAX); //Zufällige Zahlen von 0 bis 1 werden gewählt
-    float eta;
+    double eta;
     std::vector<float> weight_t;
-    float learning;
+    float learning;      //Learning Rates
+    double exp_deriv = 0; //Ableitung
+    double out_m = 0; //m ist der Index von Neuron
 
     std::vector<unsigned int> val ;         //Hier werden die Werte gespeichert und  zurückgegeben.
     std::vector<float> outVal;              //Dieser Vector speichert die Hidden-Layer.
