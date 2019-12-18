@@ -38,7 +38,7 @@ public:
 
     //Methoden des Neurons:
     float weightUpdate();                   //Aufgabe f)
-    float softMax(std::vector<unsigned> input);      //Aufgabe b)
+    float first_step(std::vector<int> input);      //Aufgabe b)
     float softMax(std::vector<float> input);
     float derivation();  //Aufgabe b) Ableitung der Softmax()
     float sum_ex();                         //Gib die Summe der Aktivierungsberechnung zurück

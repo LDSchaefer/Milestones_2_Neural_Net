@@ -8,6 +8,8 @@ Erster Versuch ein Neurales Netzwerk aus mehreren Neuronen aus 1 zusammen zusetz
 
 int main()
 {
+    srand(0);
+
     std::vector<unsigned> topology;
     int inp = 1;
     int count = 1;

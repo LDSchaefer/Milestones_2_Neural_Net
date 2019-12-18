@@ -58,14 +58,14 @@ float Neuron::weightUpdate(){
 
     //float t = 0;
 
-    srand(0);
-    weight *= 2;
+
+    weight = rand() / double(RAND_MAX);
     deltaWeight.push_back(weight); //Die weights werden in diesem Vector zurückgegeben
     return weight;
 }
 
 
-float Neuron::softMax(std::vector<unsigned> input){
+float Neuron::first_step(std::vector<int> input){
     //Aufgabe b):
     ///Hier wird Softmax berechnet die s(x) = e^x / sum(e^x)
     ///Aktivierungsfnktion für den Output

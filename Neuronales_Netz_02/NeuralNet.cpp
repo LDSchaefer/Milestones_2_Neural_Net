@@ -93,7 +93,7 @@ void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor
 
             if(i==0){
 
-                net_struct.at(i).at(j).softMax(input_vec);
+                net_struct.at(i).at(j).first_step(input_vec);
 
             }
 
@@ -137,7 +137,7 @@ void NeuralNet::output_all(std::vector<double> &res_vals){ // Nimmt einen Vektor
 
 void NeuralNet::output_spec(){
 
-
+    int inp;
 
     std::vector<double> spec_inp;
 
@@ -145,7 +145,8 @@ void NeuralNet::output_spec(){
 
     for(unsigned int i=0;i<net_struct.front().size();i++){
         std::cout << "geben Sie eine Wert für die Input Neurone "<< i+1 << "ein:";
-        std::cin >> net_struct.front().at(i).sigma;
+        std::cin >> inp;
+        input_vec.push_back(inp);
         std::cout << "" << std::endl;
     }
 
@@ -164,7 +165,7 @@ void NeuralNet::output_spec(){
 
 void NeuralNet::read_in(){
 
-    std::vector<unsigned int> readin_val;
+    std::vector<int> readin_val;
 
     int inp;
 

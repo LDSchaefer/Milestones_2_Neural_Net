@@ -16,7 +16,7 @@ class NeuralNet{
 
 public:
 
-    std::vector<unsigned int> input_vec;
+    std::vector<int> input_vec;
 
     std::vector<float> hidden_vec;
 
