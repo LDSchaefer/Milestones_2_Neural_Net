@@ -7,18 +7,9 @@
 
 
 NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
-
-
-
-
-
+    std::vector<double> results;
+    int inp;
     unsigned long long num_layer = topology.size(); // Anzahl der Eingegebenen Werte für die Topologie (da frei wählbar)
-
-
-
-
-
-
 
     for(unsigned i = 0; i < num_layer ; i++){
 
@@ -70,58 +61,18 @@ NeuralNet::NeuralNet(const std::vector<unsigned> &topology){
 
     }
 
-
-
-
-
-
-
-    int inp;
-
-
-
-    std::cout << "Wollen sie alle Outputs des Neuralen Netzwerks ausgeben? ja = 1, nein = 0" << std::endl;
-
-
-
-    std::cin >> inp;
-
-
-
-    std::vector<double> results;
-
-
-
-
-
-
-
-    if(inp == 1){
-
-
-
-        output_all(results);
-
-
-
-    }
-
-
-
-    else if(inp == 0) {
-
-
-
-        exit(0); //Falls der Benutzer nichts ausgeben möchte
-
-
-
-    }
-
-
-
     output_spec();
 
+    std::cout << "Wollen sie alle Outputs des Neuralen Netzwerks ausgeben? ja = 1, nein = 0" << std::endl;
+    std::cin >> inp;
+
+    if(inp == 1){
+        output_all(results);
+    }
+
+    else if(inp == 0) {
+        exit(0); //Falls der Benutzer nichts ausgeben möchte
+    }
 }
 
 
@@ -188,47 +139,18 @@ void NeuralNet::output_spec(){
 
 
 
-    float vec_val = 0;
-
-
+    std::vector<double> spec_inp;
 
     std::vector<unsigned int> temp_val;
 
-
-
-    for(unsigned int i=0;i<net_struct.size();i++){ // für jedes Layer
-
-
-
-        for(unsigned int j=0;j<net_struct.at(i).size();j++){ // für jedes Neuron
-
-
-
-            vec_val = net_struct.at(i)[j].softMax(net_struct.at(i)[j].val); // softmax wird auf den eingegebenen val vektor angewendet an pos j
-
-
-
-            temp_val.push_back(vec_val);
-
-
-
-        }
-
-
-
-        for(unsigned int j=0;j<net_struct.at(i).size();j++){
-
-
-
-            net_struct.at(i)[j].val = temp_val;
-
-
-
-        }
-
-
-
+    for(unsigned int i=0;i<net_struct.front().size();i++){
+        std::cout << "geben Sie eine Wert für die Input Neurone "<< i+1 << "ein:";
+        std::cin >> net_struct.front().at(i).sigma;
+        std::cout << "" << std::endl;
     }
+
+
+    output_all(spec_inp);
 
 
 
@@ -359,11 +281,6 @@ void NeuralNet::math_dist(){
 
 
 }
-
-
-
-
-
 
 
 // evtl. muss neuron_res in Neural Net berechnet werden
