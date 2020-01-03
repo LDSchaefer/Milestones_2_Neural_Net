@@ -76,7 +76,8 @@ private:
 public:
 
 
-    float reset(){
+    float reset()
+    {
         n = 3; // Größe der Matrix.
         // Weight 3x3x3 matrix
         //   ________________
@@ -89,7 +90,8 @@ public:
         wMatrix[n][n][n] = 0; // 3x3x3-Matrix
 
         // Fülle die Matrix mit Randomzahlen auf:
-        for(int i = 0; i < sizeof (wMatrix); i++){
+        for(int i = 0; i < sizeof (wMatrix); i++)
+        {
             weight = (rand()/float(RAND_MAX));
             wMatrix[i][i][i] = { weight };
 
@@ -98,8 +100,7 @@ public:
         }
         std::cout << std::endl;
         //std::cout << "Die Groesse der Matrix: " << sizeof (wMatrix) << "\n";
-
-
+        return wMatrix[n][n][n];
     }
 };
 
